@@ -22,3 +22,12 @@
       retries: 5
       delay: 10
       when: ansible_os_family == 'Windows' and ae_rsh is defined and ae_rsh.rsh is defined and ae_rsh.rsh.pip is defined and ae_rsh.rsh.pip.version is defined
+
+
+
+
+    - name: Install pip packages
+      win_shell: |
+        if(Get-Command pip) {
+          pip --disable-pip-version-check install -r {{ 'C:/piprequirements.txt' }}
+        }
