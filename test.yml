@@ -9,30 +9,30 @@
           # mode: '0644' 
 
 
-    # - name: Upgrade pip
-    #   win_shell: |
-    #     if (Get-Command python) {
-    #       python -m pip --disable-pip-version-check install --upgrade pip=='20.2.1'
-    #     }
-    #   register: pip_upgrade
-    #   changed_when: pip_upgrade.rc != 1
-    #   failed_when: pip_upgrade.rc != 0 and pip_upgrade.rc != 1
-    #   check_mode: no
-    #   until: pip_version.stdout.find( '20.2.1 ') != -1
-    #   retries: 5
-    #   delay: 10
+    - name: Upgrade pip
+      win_shell: |
+        if (Get-Command python) {
+          python -m pip --disable-pip-version-check install --upgrade pip=='20.2.1'
+        }
+      register: pip_upgrade
+      # changed_when: pip_upgrade.rc != 1
+      # failed_when: pip_upgrade.rc != 0 and pip_upgrade.rc != 1
+      # check_mode: no
+      # until: pip_version.stdout.find( '20.2.1 ') != -1
+      # retries: 5
+      # delay: 10
     #   when: ansible_os_family == 'Windows' and ae_rsh is defined and ae_rsh.rsh is defined and ae_rsh.rsh.pip is defined and ae_rsh.rsh.pip.version is defined
     # - name: Upgrade pip
     #   win_shell:  "pip --version|findstr 20.2.1"
     #   register:
-    - name: Get pip version
-      win_shell: pip --version|findstr "20.2.1"
-      register: pip_version
+    # - name: Get pip version
+    #   win_shell: pip --version|findstr "20.2.1"
+    #   register: pip_version
 
 
     - name: Display pip version
       debug:
-        var: pip_version
+        var: pip_upgrade
 
     # - name: Upgrade pip
     #   win_shell: |
