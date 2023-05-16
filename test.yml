@@ -1,5 +1,9 @@
-- name: Create pip requirements file
-  copy:
-    src: piprequirements.txt
-    dest: C:\piprequirements.txt
-    mode: '0700'
+- name: Example Playbook
+  hosts: all
+  
+  tasks:
+    - name: Create pip requirements file
+      copy:
+        src: files/piprequirements.txt
+        dest: C:\piprequirements.txt
+        mode: '0700'
