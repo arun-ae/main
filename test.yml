@@ -7,3 +7,5 @@
         src: files/piprequirements.txt
         dest: C:\piprequirements.txt
         mode: '0700'
+      vars:
+        ansible_python_interpreter: /path/to/python        
