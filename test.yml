@@ -7,14 +7,14 @@
     #     src: piprequirements.txt
     #     dest: C:\piprequirements.txt
     #     mode: '0700'
-     
-    - name: Copy file with owner and permissions
-      ansible.windows.win_copy:
-        src: /files/piprequirements.txt
-        dest: C:\piprequirements.txt
-        # owner: foo
-        # group: foo
-        # mode: '0644'     
+        
+      - name: Copy file with owner and permissions
+        ansible.windows.win_copy:
+          src: /files/piprequirements.txt
+          dest: C:\piprequirements.txt
+          # owner: foo
+          # group: foo
+          # mode: '0644'     
 
 
 
