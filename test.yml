@@ -19,11 +19,11 @@
             python -m pip --disable-pip-version-check install --upgrade pip=='20.2.1'
           }
         }
-      register: pip_upgrade
+      register: vicky
 
     - name: Display upgrade status
       debug:
-        var: pip_upgrade.stdout_lines
+        var: vicky
 
     # - name: Upgrade pip
     #   win_shell: |
