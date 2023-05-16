@@ -26,13 +26,13 @@
     #   win_shell:  "pip --version|findstr 20.2.1"
     #   register:
     - name: Get pip version
-      win_shell: "pip --version | Select-Object -First 1 | ForEach-Object {$_.Split(' ')[-1]}"
+      win_shell: pip --version|findstr "20.2.1"
       register: pip_version
 
 
     - name: Display pip version
       debug:
-        var: pip_version.stdout_lines[0]
+        var: pip_version.stdout.find
 
     # - name: Upgrade pip
     #   win_shell: |
