@@ -26,8 +26,9 @@
     #   win_shell:  "pip --version|findstr 20.2.1"
     #   register:
     - name: Get pip version
-      command: "pip --version | awk '{print $2}'"
+      win_shell: "pip --version | Select-Object -First 1 | ForEach-Object {$_.Split(' ')[-1]}"
       register: pip_version
+
 
     - name: Display pip version
       debug:
