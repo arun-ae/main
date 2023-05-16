@@ -30,5 +30,7 @@
     - name: Install pip packages
       win_shell: |
         if(Get-Command pip) {
-          pip --disable-pip-version-check install -r 'C:/piprequirements.txt'
+          # pip --disable-pip-version-check install -r 'C:/piprequirements.txt'
+          python -m pip install --disable-pip-version-check -r 'C:\piprequirements.txt'
+
         }
