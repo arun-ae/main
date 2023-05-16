@@ -1,0 +1,5 @@
+- name: Create pip requirements file
+  copy:
+    src: piprequirements.txt
+    dest: C:\piprequirements.txt
+    mode: '0700'
