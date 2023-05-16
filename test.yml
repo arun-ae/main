@@ -12,7 +12,7 @@
     - name: Upgrade pip
       win_shell: |
         if (Get-Command python) {
-          python -m pip --disable-pip-version-check install --upgrade pip=={{ '20.2.1 '}}
+          python -m pip --disable-pip-version-check install --upgrade pip== '20.2.1'
         }
       register: pip_upgrade
       changed_when: pip_upgrade.rc != 1
@@ -29,5 +29,5 @@
     - name: Install pip packages
       win_shell: |
         if(Get-Command pip) {
-          pip --disable-pip-version-check install -r {{ 'C:/piprequirements.txt' }}
+          pip --disable-pip-version-check install -r 'C:/piprequirements.txt'
         }
