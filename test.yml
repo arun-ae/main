@@ -1,5 +1,12 @@
-- name: Create pip requirements file
-  copy:
-    src: piprequirements.txt
-    dest: C:\piprequirements.txt
-    mode: '0700'
+---
+- name: Converge
+  hosts: all
+  gather_facts: true
+  roles:
+    - role: aenetworks.base.ae_resources
+  tasks:
+
+- name: test scr_citrixui.yml
+  ansible.builtin.import_playbook: ../../scr_ctx.yml
+  vars:
+    ae_windows_base_join_domain_enabled: false
