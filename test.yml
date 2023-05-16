@@ -3,8 +3,8 @@
   
   tasks:
     - name: arun
-      ansible.windows.win_copy:
-        src: /files/piprequirements.txt
+      win_copy:
+        src: files/piprequirements.txt
         dest: C:\piprequirements.txt
           # mode: '0644' 
 
