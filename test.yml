@@ -32,7 +32,7 @@
 
     - name: Display pip version
       debug:
-        var: pip_version.stdout.find
+        var: pip_version
 
     # - name: Upgrade pip
     #   win_shell: |
