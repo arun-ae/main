@@ -7,18 +7,18 @@
     #     src: files/piprequirements.txt
     #     dest: C:\piprequirements.txt
     #     mode: '0700' 
-    - name: Install Python using Chocolatey
-      win_chocolatey:
-        name: python
-        state: present
-        version: '3.9.9'
+    # - name: Install Python using Chocolatey
+    #   win_chocolatey:
+    #     name: python
+    #     state: present
+    #     version: '3.9.9'
 
         
-      register: pip_output
+    #   register: pip_output
 
-    - name: Display upgrade status
-      debug:
-        var: pip_output            
+    # - name: Display upgrade status
+    #   debug:
+    #     var: pip_output            
         
 
 
@@ -41,11 +41,11 @@
     #     state: absent
     #   when: python_version_output.stdout != 'Python 3.9.9'
 
-    # - name: Install Python 3.9.9
-    #   win_chocolatey:
-    #     name: python
-    #     state: present
-    #     version: '3.9.9'
+    - name: Install Python 3.9.9
+      win_chocolatey:
+        name: python
+        state: present
+        version: '3.9.9'
     #   when: python_version_output.stdout != 'Python 3.9.9'
 ##################################################################################################
     # - name: Get pip version
