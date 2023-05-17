@@ -44,13 +44,26 @@
           }
         }
       register: pip_output
-      
+
     - name: Display upgrade status
       debug:
         var: pip_output
 
 
 
+
+
+   # Pip Install packages
+
+    - name: Run PowerShell script
+      win_shell: |
+        if (Get-Command pip) {
+          pip --disable-pip-version-check install -r C:/piprequirements.txt
+        }
+      register: file_output
+    - name : Display upgrade status
+      debug:
+        var: file_output  
 
     # - name: Check if Python is installed
     #   win_command: python --version
