@@ -135,10 +135,6 @@
         state: absent
         version: '3.9.9'
       when: python_version_output.stdout != 'Python 3.9.9'
-      register: 1_condition
-    - name : Display upgrade status
-      debug:
-        var: 1_condition        
 
     - name: Install Python 3.9.9
       win_chocolatey:
@@ -146,7 +142,3 @@
         state: present
         version: '3.9.9'
       when: python_version_output.stdout != 'Python 3.9.9'
-      register: 2_condition
-    - name : Display upgrade status
-      debug:
-        var: 2_condition        
