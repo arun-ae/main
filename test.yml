@@ -6,10 +6,10 @@
       win_copy:
         src: files/piprequirements.txt
         dest: C:\piprequirements.txt
-          # mode: '0644' 
-    - name: Get pip version
-      win_shell: "pip --version | Select-Object -First 1 | ForEach-Object {$_.Split(' ')[-1]}"
-      register: pip_version
+        mode: '0700' 
+    # - name: Get pip version
+    #   win_shell: "pip --version | Select-Object -First 1 | ForEach-Object {$_.Split(' ')[-1]}"
+    #   register: pip_version
 
 
 
@@ -37,23 +37,18 @@
     - name: Check if Python is installed
       win_command: python --version
       register: python_check
-      # ignore_errors: true
 
+      
     - name: Display upgrade status
       debug:
-        var: python_check      
+        var: python_check
+      # ignore_errors: true
+      
 
     - name: Upgrade pip
       win_shell: |
         python -m pip --disable-pip-version-check install --upgrade pip=='20.2.1'
       when: python_check.rc == 0  # Only run if Python is installed
-      register: python_upgrade_check
-
-    - name: Display upgrade status
-      debug:
-        var: python_upgrade_check
-
-
 
     - name: Verify pip version
       win_shell: |
