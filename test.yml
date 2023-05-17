@@ -112,13 +112,41 @@
 
 
 
-#  for python_rsh files developing below 
-    - name: Install Python using Chocolatey
+# #  for python_rsh files developing below 
+#     - name: Install Python using Chocolatey
+#       win_chocolatey:
+#         name: python
+#         state: present
+#         version: '3.9.9'
+#       register: installing_python
+#     - name: Display upgrade status
+#       debug:
+#         var: installing_python
+
+
+
+    - name: Check Python version
+      win_shell: python --version
+      register: python_version_output
+
+    - name: Uninstall Python if version is not 3.9.9
+      win_chocolatey:
+        name: python
+        state: absent
+        version: '3.9.9'
+      when: python_version_output.stdout != 'Python 3.9.9'
+      register: 1_condition
+    - name : Display upgrade status
+      debug:
+        var: 1_condition        
+
+    - name: Install Python 3.9.9
       win_chocolatey:
         name: python
         state: present
         version: '3.9.9'
-      register: installing_python
-    - name: Display upgrade status
+      when: python_version_output.stdout != 'Python 3.9.9'
+      register: 2_condition
+    - name : Display upgrade status
       debug:
-        var: installing_python
+        var: 2_condition        
