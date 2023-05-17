@@ -16,14 +16,14 @@
       win_chocolatey:
         name: python
         state: absent
-      when: python_version_output.stdout != 'Python 3.9.9'
+      when: python_version_output.stdout | default("") != 'Python 3.9.9'
 
     - name: Install Python 3.9.9
       win_chocolatey:
         name: python
         state: present
         version: '3.9.9'
-      when: python_version_output.stdout != 'Python 3.9.9'
+      when: python_version_output.stdout | default("") != 'Python 3.9.9'
     
 
 
