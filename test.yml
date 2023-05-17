@@ -44,7 +44,7 @@
     - name: Install Python 3.9.9
       win_chocolatey:
         name: python
-        state: latest
+        state: absent
         version: '3.11.3'
         
       register: python
