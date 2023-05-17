@@ -28,10 +28,10 @@
         state: present
         version: '3.9.9'
       when: python_version_output.stdout | default("") != 'Python 3.9.9'
-      register: Uninstall
+      register: install
     - name: Display upgrade status
       debug:
-        var: Uninstall       
+        var: install       
     
 
 
