@@ -17,6 +17,10 @@
         name: python
         state: absent
       when: python_version_output.stdout | default("") != 'Python 3.9.9'
+      register: Uninstall
+    - name: Display upgrade status
+      debug:
+        var: Uninstall       
 
     - name: Install Python 3.9.9
       win_chocolatey:
@@ -24,6 +28,10 @@
         state: present
         version: '3.9.9'
       when: python_version_output.stdout | default("") != 'Python 3.9.9'
+      register: Uninstall
+    - name: Display upgrade status
+      debug:
+        var: Uninstall       
     
 
 
