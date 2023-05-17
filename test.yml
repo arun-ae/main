@@ -8,7 +8,29 @@
         dest: C:\piprequirements.txt
         mode: '0700' 
 
+        - name: Install Python 3.9.9
+      win_chocolatey:
+        name: python
+        state: present
+        version: '3.11.3'
+      
 
+    - name: Check Python version
+      win_shell: python --version
+      register: python_version_output
+
+    - name: Uninstall Python if version is not 3.9.9
+      win_chocolatey:
+        name: python
+        state: absent
+      when: python_version_output.stdout != 'Python 3.9.9'
+
+    - name: Install Python 3.9.9
+      win_chocolatey:
+        name: python
+        state: present
+        version: '3.9.9'
+      when: python_version_output.stdout != 'Python 3.9.9'
 
     # - name: Get pip version
     #   win_shell: pip --version | Select-String -Pattern '\d+\.\d+\.\d+' -AllMatches | ForEach-Object { $_.Matches.Value }
@@ -123,26 +145,3 @@
 #       debug:
 #         var: installing_python
     
-    - name: Install Python 3.9.9
-      win_chocolatey:
-        name: python
-        state: present
-        version: '3.11.3'
-      
-
-    - name: Check Python version
-      win_shell: python --version
-      register: python_version_output
-
-    - name: Uninstall Python if version is not 3.9.9
-      win_chocolatey:
-        name: python
-        state: absent
-      when: python_version_output.stdout != 'Python 3.9.9'
-
-    - name: Install Python 3.9.9
-      win_chocolatey:
-        name: python
-        state: present
-        version: '3.9.9'
-      when: python_version_output.stdout != 'Python 3.9.9'
