@@ -3,27 +3,22 @@
   
   tasks:
 
-    - name: Gather Chocolatey facts
-      win_chocolatey_facts:
-      register: choco_facts
+    - name: Get Python version
+      win_shell: python --version
+      register: python_version_output
+      changed_when: false
 
-    - name: Check Python version
+    - name: Extract Python version
       set_fact:
-        python_version: "{{ choco_facts.packages['python'].version }}"
-      when: "'python' in choco_facts.packages"
+        python_version: "{{ python_version_output.stdout | regex_findall('Python (\\d+\\.\\d+\\.\\d+)') | first }}"
 
     - name: Uninstall Python
-      win_chocolatey:
-        name: python
-        state: absent
+      win_shell: pip uninstall -y python
       when: python_version is defined
 
     - name: Install Python 3.9.9
-      win_chocolatey:
-        name: python
-        state: present
-        version: '3.9.9'
-      when: python_version != '3.9.9' or python_version is not defined
+      win_shell: pip install python==3.9.9
+      when: python_version != '3.9.9' or python_version is not defined        
 
     # - name: Pip Creating Requirements file
     #   win_copy:
