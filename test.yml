@@ -12,18 +12,18 @@
       register: choco_result
       ignore_errors: true
 
-    - name: Uninstall lower version of Python
-      win_chocolatey:
-        name: python
-        state: absent
-      when: choco_result|failed
+    # - name: Uninstall lower version of Python
+    #   win_chocolatey:
+    #     name: python
+    #     state: absent
+    #   when: choco_result|failed
 
-    - name: Install or Upgrade Python to version 3.9.9 (retry)
-      win_chocolatey:
-        name: python
-        state: present
-        version: '3.9.9'
-      when: choco_result|failed
+    # - name: Install or Upgrade Python to version 3.9.9 (retry)
+    #   win_chocolatey:
+    #     name: python
+    #     state: present
+    #     version: '3.9.9'
+    #   when: choco_result|failed
    
 
     # - name: Pip Creating Requirements file
