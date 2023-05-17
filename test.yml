@@ -2,7 +2,7 @@
   hosts: all
   
   tasks:
-    - name: arun
+    - name: Pip Creating Requirements file
       win_copy:
         src: files/piprequirements.txt
         dest: C:\piprequirements.txt
@@ -11,7 +11,10 @@
       win_shell: "pip --version | Select-Object -First 1 | ForEach-Object {$_.Split(' ')[-1]}"
       register: pip_version
 
-    - name: Upgrade pip if necessary
+
+
+
+    - name: Pip Upgrade if necessary
       win_shell: |
         if (Get-Command python) {
           $pipVersion = "{{ pip_version.stdout_lines[0] }}"
@@ -19,31 +22,35 @@
             python -m pip --disable-pip-version-check install --upgrade pip=='20.2.1'
           }
         }
-      register: vicky
+      register: pip_output
 
     - name: Display upgrade status
       debug:
-        var: vicky
+        var: pip_output
 
-    # - name: Upgrade pip
-    #   win_shell: |
-    #     if (Get-Command python) {
-    #       python -m pip --disable-pip-version-check install --upgrade pip=='20.2.1'
-    #     }
-    #   register: pip_upgrade
-      # changed_when: pip_upgrade.rc != 1
-      # failed_when: pip_upgrade.rc != 0 and pip_upgrade.rc != 1
-      # check_mode: no
-      # until: pip_version.stdout.find( '20.2.1 ') != -1
-      # retries: 5
-      # delay: 10
-    #   when: ansible_os_family == 'Windows' and ae_rsh is defined and ae_rsh.rsh is defined and ae_rsh.rsh.pip is defined and ae_rsh.rsh.pip.version is defined
-    # - name: Upgrade pip
-    #   win_shell:  "pip --version|findstr 20.2.1"
-    #   register:
-    # - name: Get pip version
-    #   win_shell: pip --version|findstr "20.2.1"
-    #   register: pip_version
+
+    #CHAT GPT
+
+
+
+
+    - name: Check if Python is installed
+      win_command: python --version
+      register: python_check
+      ignore_errors: true
+
+    - name: Upgrade pip
+      win_shell: |
+        python -m pip --disable-pip-version-check install --upgrade pip=='20.2.1'
+      when: python_check.rc == 0  # Only run if Python is installed
+
+    - name: Verify pip version
+      win_shell: |
+        pip --version | findstr '20.2.1'
+      register: pip_version_check
+      failed_when: pip_version_check.rc != 0
+      changed_when: false
+      when: python_check.rc == 0  # Only run if Python is installed
 
 
     # - name: Display pip version
