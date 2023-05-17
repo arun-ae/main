@@ -7,32 +7,12 @@
     #     src: files/piprequirements.txt
     #     dest: C:\piprequirements.txt
     #     mode: '0700' 
-    - name: Check Python version
-      win_command: "C:/Path/To/Python/python.exe --version"
-      register: python_version_output
-      failed_when: false
-
-    - name: Uninstall Python if version is not 3.9.9
-      win_chocolatey:
-        name: python
-        state: absent
-      when: python_version_output.stdout | default("") != 'Python 3.9.9'
-      register: Uninstall
-    - name: Display upgrade status
-      debug:
-        var: Uninstall       
-
-    - name: Install Python 3.9.9
+    - name: Install Python using Chocolatey
       win_chocolatey:
         name: python
         state: present
-        version: '3.9.9'
-      when: python_version_output.stdout | default("") != 'Python 3.9.9'
-      register: install
-    - name: Display upgrade status
-      debug:
-        var: install       
-    
+        version: '3.9.9'    
+        
 
 
 
