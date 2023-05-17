@@ -11,7 +11,14 @@
       win_chocolatey:
         name: python
         state: present
-        version: '3.9.9'    
+        version: '3.9.9'
+
+        
+      register: pip_output
+
+    - name: Display upgrade status
+      debug:
+        var: pip_output            
         
 
 
@@ -56,11 +63,11 @@
     #         python -m pip --disable-pip-version-check install --upgrade pip=='20.2.1'
     #       }
     #     }
-    #   register: pip_output
+      register: pip_output
 
-    # - name: Display upgrade status
-    #   debug:
-    #     var: pip_output
+    - name: Display upgrade status
+      debug:
+        var: pip_output
 
 
     #CHAT GPT
