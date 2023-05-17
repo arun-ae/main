@@ -118,3 +118,7 @@
         name: python
         state: present
         version: '3.9.9'
+      register: installing_python
+    - name: Display upgrade status
+      debug:
+        var: installing_python
