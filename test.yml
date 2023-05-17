@@ -45,13 +45,13 @@
       win_chocolatey:
         name: python
         state: present
-        version: '3.11.3'
+        version: '3.9.9'
         
-      register: python
+      register: python_3.9.9
 
     - name: Display upgrade status
       debug:
-        var: python      
+        var: python_3.9.9      
     #   when: python_version_output.stdout != 'Python 3.9.9'
 ##################################################################################################
     # - name: Get pip version
