@@ -2,22 +2,15 @@
   hosts: all
   
   tasks:
-    - name: Pip Creating Requirements file
-      win_copy:
-        src: files/piprequirements.txt
-        dest: C:\piprequirements.txt
-        mode: '0700' 
-
-    - name: Install Python 3.9.9
-      win_chocolatey:
-        name: python
-        state: present
-        version: '3.11.3'
-      
-
+    # - name: Pip Creating Requirements file
+    #   win_copy:
+    #     src: files/piprequirements.txt
+    #     dest: C:\piprequirements.txt
+    #     mode: '0700' 
     - name: Check Python version
-      win_shell: python --version
+      win_command: "C:/Path/To/Python/python.exe --version"
       register: python_version_output
+      failed_when: false
 
     - name: Uninstall Python if version is not 3.9.9
       win_chocolatey:
@@ -31,7 +24,35 @@
         state: present
         version: '3.9.9'
       when: python_version_output.stdout != 'Python 3.9.9'
+    
 
+
+
+#################################################
+    # - name: Install Python 3.9.9
+    #   win_chocolatey:
+    #     name: python
+    #     state: present
+    #     version: '3.11.3'
+      
+
+    # - name: Check Python version
+    #   win_shell: python --version
+    #   register: python_version_output
+
+    # - name: Uninstall Python if version is not 3.9.9
+    #   win_chocolatey:
+    #     name: python
+    #     state: absent
+    #   when: python_version_output.stdout != 'Python 3.9.9'
+
+    # - name: Install Python 3.9.9
+    #   win_chocolatey:
+    #     name: python
+    #     state: present
+    #     version: '3.9.9'
+    #   when: python_version_output.stdout != 'Python 3.9.9'
+##################################################################################################
     # - name: Get pip version
     #   win_shell: pip --version | Select-String -Pattern '\d+\.\d+\.\d+' -AllMatches | ForEach-Object { $_.Matches.Value }
     #   register: pip_version
@@ -56,37 +77,37 @@
 
     #CHAT GPT
 
+#################################################
+    # - name: Pip Upgrade if necessary
+    #   win_shell: |
+    #     if (Get-Command python) {
+    #       $pipVersion = "pip --version | Select-String -Pattern '\d+\.\d+\.\d+' -AllMatches | ForEach-Object { $_.Matches.Value }"
+    #       if ($pipVersion -notmatch '20.2.1') {
+    #         python -m pip --disable-pip-version-check install --upgrade pip=='20.2.1'
+    #       }
+    #     }
+    #   register: pip_output
 
-    - name: Pip Upgrade if necessary
-      win_shell: |
-        if (Get-Command python) {
-          $pipVersion = "pip --version | Select-String -Pattern '\d+\.\d+\.\d+' -AllMatches | ForEach-Object { $_.Matches.Value }"
-          if ($pipVersion -notmatch '20.2.1') {
-            python -m pip --disable-pip-version-check install --upgrade pip=='20.2.1'
-          }
-        }
-      register: pip_output
-
-    - name: Display upgrade status
-      debug:
-        var: pip_output
-
-
+    # - name: Display upgrade status
+    #   debug:
+    #     var: pip_output
 
 
 
+
+###########################################################################################3
    # Pip Install packages
 
-    - name: Run PowerShell script
-      win_shell: |
-        if (Get-Command pip) {
-          pip --disable-pip-version-check install -r C:/piprequirements.txt
-        }
-      register: file_output
-    - name : Display upgrade status
-      debug:
-        var: file_output  
-
+    # - name: Run PowerShell script
+    #   win_shell: |
+    #     if (Get-Command pip) {
+    #       pip --disable-pip-version-check install -r C:/piprequirements.txt
+    #     }
+    #   register: file_output
+    # - name : Display upgrade status
+    #   debug:
+    #     var: file_output 
+#################################################        
     # - name: Check if Python is installed
     #   win_command: python --version
     #   register: python_check
