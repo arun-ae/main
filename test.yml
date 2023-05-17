@@ -7,9 +7,12 @@
         src: files/piprequirements.txt
         dest: C:\piprequirements.txt
         mode: '0700' 
-    # - name: Get pip version
-    #   win_shell: "pip --version | Select-Object -First 1 | ForEach-Object {$_.Split(' ')[-1]}"
-    #   register: pip_version
+    - name: Get pip version
+      win_shell: "pip --version | Select-Object -First 1 | ForEach-Object {$_.Split(' ')[-1]}"
+      register: pip_version
+    - name: Display upgrade status
+      debug:
+        var: pip_version  
 
 
 
@@ -34,47 +37,47 @@
 
 
 
-    - name: Check if Python is installed
-      win_command: python --version
-      register: python_check
+    # - name: Check if Python is installed
+    #   win_command: python --version
+    #   register: python_check
 
       
-    - name: Display upgrade status
-      debug:
-        var: python_check
-      # ignore_errors: true
-      
-
-    - name: Upgrade pip
-      win_shell: |
-        python -m pip --disable-pip-version-check install --upgrade pip=='20.2.1'
-      when: python_check.rc == 0  # Only run if Python is installed
-
-    - name: Verify pip version
-      win_shell: |
-        pip --version | findstr '20.2.1'
-      register: pip_version_check
-      failed_when: pip_version_check.rc != 0
-      changed_when: false
-      when: python_check.rc == 0  # Only run if Python is installed
-
-
-    # - name: Display pip version
+    # - name: Display upgrade status
     #   debug:
-    #     var: pip_upgrade
+    #     var: python_check
+    #   # ignore_errors: true
+      
 
     # - name: Upgrade pip
     #   win_shell: |
-    #     if (Get-Command python) {
-    #       python -m pip --disable-pip-version-check install --upgrade pip=='20.2.1'
-    #     }
+    #     python -m pip --disable-pip-version-check install --upgrade pip=='20.2.1'
+    #   when: python_check.rc == 0  # Only run if Python is installed
 
-
-    # - name: Install pip packages
+    # - name: Verify pip version
     #   win_shell: |
-    #     if(Get-Command pip) {
-    #       # pip --disable-pip-version-check install -r 'C:/piprequirements.txt'
-    #       python -m pip install --disable-pip-version-check -r 'C:\piprequirements.txt'
+    #     pip --version | findstr '20.2.1'
+    #   register: pip_version_check
+    #   failed_when: pip_version_check.rc != 0
+    #   changed_when: false
+    #   when: python_check.rc == 0  # Only run if Python is installed
 
-    #     }
+
+    # # - name: Display pip version
+    # #   debug:
+    # #     var: pip_upgrade
+
+    # # - name: Upgrade pip
+    # #   win_shell: |
+    # #     if (Get-Command python) {
+    # #       python -m pip --disable-pip-version-check install --upgrade pip=='20.2.1'
+    # #     }
+
+
+    # # - name: Install pip packages
+    # #   win_shell: |
+    # #     if(Get-Command pip) {
+    # #       # pip --disable-pip-version-check install -r 'C:/piprequirements.txt'
+    # #       python -m pip install --disable-pip-version-check -r 'C:\piprequirements.txt'
+
+    # #     }
 
