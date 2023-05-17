@@ -8,7 +8,7 @@
         dest: C:\piprequirements.txt
         mode: '0700' 
 
-        - name: Install Python 3.9.9
+    - name: Install Python 3.9.9
       win_chocolatey:
         name: python
         state: present
