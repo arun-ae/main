@@ -7,29 +7,29 @@
         src: files/piprequirements.txt
         dest: C:\piprequirements.txt
         mode: '0700' 
+
+
+
     - name: Get pip version
-      win_shell: "pip --version | Select-Object -First 1 | ForEach-Object {$_.Split(' ')[-1]}"
+      win_shell: "pip --version | Select-String -Pattern '\d+\.\d+\.\d+' -AllMatches | ForEach-Object { $_.Matches.Value }"
       register: pip_version
     - name: Display upgrade status
       debug:
         var: pip_version  
 
+    # - name: Pip Upgrade if necessary
+    #   win_shell: |
+    #     if (Get-Command python) {
+    #       $pipVersion = "{{ pip_version.stdout }}"
+    #       if ($pipVersion -ne '20.2.1') {
+    #         python -m pip --disable-pip-version-check install --upgrade pip=='20.2.1'
+    #       }
+    #     }
+    #   register: pip_output
 
-
-
-    - name: Pip Upgrade if necessary
-      win_shell: |
-        if (Get-Command python) {
-          $pipVersion = "{{ pip_version.stdout_lines[0] }}"
-          if ($pipVersion -ne '20.2.1') {
-            python -m pip --disable-pip-version-check install --upgrade pip=='20.2.1'
-          }
-        }
-      register: pip_output
-
-    - name: Display upgrade status
-      debug:
-        var: pip_output
+    # - name: Display upgrade status
+    #   debug:
+    #     var: pip_output
 
 
     #CHAT GPT
