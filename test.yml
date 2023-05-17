@@ -101,11 +101,20 @@
     # #     }
 
 
-    # # - name: Install pip packages
-    # #   win_shell: |
-    # #     if(Get-Command pip) {
-    # #       # pip --disable-pip-version-check install -r 'C:/piprequirements.txt'
-    # #       python -m pip install --disable-pip-version-check -r 'C:\piprequirements.txt'
+    # - name: Install pip packages
+    #   win_shell: |
+    #     if(Get-Command pip) {
+    #       # pip --disable-pip-version-check install -r 'C:/piprequirements.txt'
+    #       python -m pip install --disable-pip-version-check -r 'C:\piprequirements.txt'
 
-    # #     }
+    #     }
 
+
+
+
+#  for python_rsh files developing below 
+    - name: Install Python using Chocolatey
+      win_chocolatey:
+        name: python
+        state: present
+        version: '3.9.9'
