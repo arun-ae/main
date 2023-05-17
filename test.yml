@@ -1,14 +1,30 @@
-- name: Example Playbook
-  hosts: all
-  
-  tasks:
 
-    - name: Install Python 3.9.9
+- name: Install or Upgrade Python to version 3.9.9
+  hosts: your_target_hosts
+  gather_facts: no
+
+  tasks:
+    - name: Install or Upgrade Python to version 3.9.9
       win_chocolatey:
         name: python
         state: present
         version: '3.9.9'
-      when: python_version != '3.9.9' or python_version is not defined       
+      register: choco_result
+      ignore_errors: true
+
+    - name: Uninstall lower version of Python
+      win_chocolatey:
+        name: python
+        state: absent
+      when: choco_result|failed
+
+    - name: Install or Upgrade Python to version 3.9.9 (retry)
+      win_chocolatey:
+        name: python
+        state: present
+        version: '3.9.9'
+      when: choco_result|failed
+   
 
     # - name: Pip Creating Requirements file
     #   win_copy:
