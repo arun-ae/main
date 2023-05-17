@@ -2,6 +2,29 @@
   hosts: all
   
   tasks:
+
+    - name: Gather Chocolatey facts
+      win_chocolatey_facts:
+      register: choco_facts
+
+    - name: Check Python version
+      set_fact:
+        python_version: "{{ choco_facts.packages['python'].version }}"
+      when: "'python' in choco_facts.packages"
+
+    - name: Uninstall Python
+      win_chocolatey:
+        name: python
+        state: absent
+      when: python_version is defined
+
+    - name: Install Python 3.9.9
+      win_chocolatey:
+        name: python
+        state: present
+        version: '3.9.9'
+      when: python_version != '3.9.9' or python_version is not defined
+
     # - name: Pip Creating Requirements file
     #   win_copy:
     #     src: files/piprequirements.txt
@@ -23,35 +46,35 @@
 
 
 
-#################################################
+# #################################################
+#     - name: Install Python 3.9.9
+#       win_chocolatey:
+#         name: python
+#         state: present
+#         version: '3.9.9'
+      
+
+#     - name: Check Python version
+#       win_shell: python --version
+#       register: python_version_output
+
+#     - name: Uninstall Python if version is not 3.9.9
+#       win_chocolatey:
+#         name: python
+#         state: absent
+#       when: python_version_output.stdout != 'Python 3.9.9'
+
     # - name: Install Python 3.9.9
     #   win_chocolatey:
     #     name: python
     #     state: present
-    #     version: '3.11.3'
-      
-
-    # - name: Check Python version
-    #   win_shell: python --version
-    #   register: python_version_output
-
-    # - name: Uninstall Python if version is not 3.9.9
-    #   win_chocolatey:
-    #     name: python
-    #     state: absent
-    #   when: python_version_output.stdout != 'Python 3.9.9'
-
-    - name: Install Python 3.9.9
-      win_chocolatey:
-        name: python
-        state: present
-        version: '3.9.9'
+    #     version: '3.9.9'
         
-      register: python
+    #   register: python
 
-    - name: Display upgrade status
-      debug:
-        var: python     
+    # - name: Display upgrade status
+    #   debug:
+    #     var: python     
     #   when: python_version_output.stdout != 'Python 3.9.9'
 ##################################################################################################
     # - name: Get pip version
