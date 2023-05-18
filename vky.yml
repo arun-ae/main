@@ -5,7 +5,7 @@
   tasks:
     - name: Store playbook name components in variables
       set_fact:
-        tier: "{{ ansible_play_name[4:7] }}"
+        8: "{{ ansible_play_name[4:7] }}"
         app_id: "{{ ansible_play_name[0:3] }}"
         env: "{{ tags['Environment'] | default('dv1') | lower }}"
              "{{ tags['Environment'] | default('dv2') | lower }}"
