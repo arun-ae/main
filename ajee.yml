@@ -1,0 +1,26 @@
+- name: str_web
+  hosts: all
+  gather_facts: true
+  become: yes
+  become_method: runas
+  become_user: Administrator
+
+  vars:
+    tier: "{{ ansible_play_name[4:7] }}"
+    app_id: "{{ ansible_play_name[0:3] }}"
+    env_id: "{{ tags['Environem'] }}"
+
+  tasks:
+    - name: include vars
+      include_vars:
+        file: defaults/main.yml
+
+    - name: include tasks
+      include_tasks:
+        file: tasks/test.yml
+
+    - name: Print file status
+      debug:
+        var: env_id
+
+

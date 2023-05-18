@@ -1,0 +1,24 @@
+---
+- name: rsh_ui
+  hosts: all
+  gather_facts: true
+  become: yes
+  become_method: runas
+  become_user: Administrator
+  vars:
+    tier: "{{ ansible_play_name[4:3] }}"
+    app_id: "{{ ansible_play_name[0:3] }}"
+    env_id: "{{ tags['Environment'] | default('dv1') | lower }}"
+
+
+
+
+    
+  # tasks:
+  #   - name: include windows base
+  #     ansible.builtin.include_role:
+  #       name: aenetworks.base.ae_windows_base
+
+  #   - name: include tier_web.yml
+  #     ansible.builtin.include_tasks:
+  #       file: tasks/tier_web.yml

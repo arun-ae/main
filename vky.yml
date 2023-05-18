@@ -1,0 +1,23 @@
+- name: Store playbook name in a variable
+  hosts: localhost
+  gather_facts: false
+
+  tasks:
+    - name: Store playbook name components in variables
+      set_fact:
+        tier: "{{ ansible_play_name[4:7] }}"
+        app_id: "{{ ansible_play_name[0:3] }}"
+        env: "{{ tags['Environment'] | default('dv1') | lower }}"
+             "{{ tags['Environment'] | default('dv2') | lower }}"
+
+- name: Print file status
+  hosts: localhost
+  gather_facts: false
+
+  tasks:
+    - name: Debug variables
+      debug:
+        var:
+          - tier
+          - app_id
+          - env
