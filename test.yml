@@ -1,5 +1,5 @@
 
-- name: rsh_ui  ..
+- name: rsh_ui 
   hosts: all
   gather_facts: no
   vars:
