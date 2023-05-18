@@ -1,13 +1,14 @@
-
+---
 - name: rsh_ui 
   hosts: all
   gather_facts: no
-  set_facts:
-    tier: "{{ ansible_play_name[4:3] }}"
-    app_id: "{{ ansible_play_name[0:3] }}"
-    env_id: "{{ tags['Environment'] | default('dv1') | lower }}"
   tasks:
-    - name: Debug variables
+    - name: Store playbook name in a variable
+      set_fact:
+        tier: "{{ansible_play_name[4:7]}}"
+        app_id: "{{ansible_play_name[0:3]}}"
+        env: "{{ tags['Environment'] | default('dv1') | lower }}"
+    - name: Print file status
       debug:
         var: "{{ item }}"
       loop:
