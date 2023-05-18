@@ -2,23 +2,18 @@
 - name: rsh_ui 
   hosts: all
   gather_facts: no
-  vars:
+  set_facts:
     tier: "{{ ansible_play_name[4:3] }}"
     app_id: "{{ ansible_play_name[0:3] }}"
     env_id: "{{ tags['Environment'] | default('dv1') | lower }}"
-
-
-- name: Print file status
-  hosts: all
-  gather_facts: false
-
   tasks:
     - name: Debug variables
       debug:
-        var:
-          - tier
-          - app_id
-          - env_id
+        var: "{{ item }}"
+      loop:
+        - tier
+        - app_id
+        - env
 
   # tasks:
   #   - name: Install or Upgrade Python to version 3.9.9
