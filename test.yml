@@ -3,66 +3,66 @@
   hosts: all
   gather_facts: no
   tasks:
-    - name: Store playbook name in a variable
-      set_fact:
-        tier: "{{ansible_play_name[4:7]}}"
-        app_id: "{{ansible_play_name[0:3]}}"
-        env: "{{ tags['Environment'] | default('dv1') | lower }}"
-    - name: Print file status
-      debug:
-        var: "{{ item }}"
-      loop:
-        - tier
-        - app_id
-        - env
+    # - name: Store playbook name in a variable
+    #   set_fact:
+    #     tier: "{{ansible_play_name[4:7]}}"
+    #     app_id: "{{ansible_play_name[0:3]}}"
+    #     env: "{{ tags['Environment'] | default('dv1') | lower }}"
+    # - name: Print file status
+    #   debug:
+    #     var: "{{ item }}"
+    #   loop:
+    #     - tier
+    #     - app_id
+    #     - env
     
-    # - name: Check oracle_client folder if missing
-    #   win_stat: 
-    #     path: C:\install\oracle_client
-    #   register: file_status_oracle_client
+    - name: Check oracle_client folder if missing
+      win_stat: 
+        path: C:\install\oracle_client
+      register: file_status_oracle_client
 
 
 
-    # - name: Create directories if they don't exist
-    #   win_file:
-    #     path: "{{ item }}"
-    #     state: directory
-    #   with_items:
-    #     - "C:\\install\\oracle_client"
-    #     - "C:\\oracle\\NT_193000_client_home"
-    #   when: not file_status_oracle_client.stat.exists
+    - name: Create directories if they don't exist
+      win_file:
+        path: "{{ item }}"
+        state: directory
+      with_items:
+        - "C:\\install\\oracle_client"
+        - "C:\\oracle\\NT_193000_client_home"
+      when: not file_status_oracle_client.stat.exists
 
 
 
-    # - name: Check if NT_193000_client_home.zip exists
-    #   win_stat:
-    #     path: 'C:\\install\\oracle_client\\NT_193000_client_home.zip'
-    #   register: file_status_oracle_zip
+    - name: Check if NT_193000_client_home.zip exists
+      win_stat:
+        path: 'C:\\install\\oracle_client\\NT_193000_client_home.zip'
+      register: file_status_oracle_zip
 
 
 
-    # - name: Download NT_193000_client_home.zip
-    #   win_get_url:
-    #     url: 'https://oracle-bucket-01.s3.amazonaws.com/client/vcredist/NT_193000_client_home.zip'
-    #     dest: 'C:\\install\\oracle_client\\NT_193000_client_home.zip'
-    #   when: not file_status_oracle_zip.stat.exists
+    - name: Download NT_193000_client_home.zip
+      win_get_url:
+        url: 'https://oracle-bucket-01.s3.amazonaws.com/client/vcredist/NT_193000_client_home.zip'
+        dest: 'C:\\install\\oracle_client\\NT_193000_client_home.zip'
+      when: not file_status_oracle_zip.stat.exists
 
 
 
-    # - name: Check oracle_client install
-    #   win_stat:
-    #     path: C:\oracle\NT_193000_client_home\install
-    #   register: file_status_oracle_client
+    - name: Check oracle_client install
+      win_stat:
+        path: C:\oracle\NT_193000_client_home\install
+      register: file_status_oracle_client
 
 
 
 
-    # - name: Extract Oracle client archive and set variable
-    #   win_unzip:
-    #     src: 'C:\install\oracle_client\NT_193000_client_home.zip'
-    #     dest: "C:\\oracle\\NT_193000_client_home"
-    #   register: unzip_result
-    #   when: not file_status_oracle_client.stat.exists
+    - name: Extract Oracle client archive and set variable
+      win_unzip:
+        src: 'C:\install\oracle_client\NT_193000_client_home.zip'
+        dest: "C:\\oracle\\NT_193000_client_home"
+      register: unzip_result
+      when: not file_status_oracle_client.stat.exists
 
 
     #####################################33
