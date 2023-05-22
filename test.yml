@@ -17,14 +17,14 @@
         - env
     
     - name: Check oracle_client folder if missing
-      ansible.windows.win_stat: 
+      win_stat: 
         path: C:\install\oracle_client
       register: file_status_oracle_client
 
 
 
     - name: Create directories if they don't exist
-      ansible.windows.win_file:
+      win_file:
         path: "{{ item }}"
         state: directory
       with_items:
@@ -50,7 +50,7 @@
 
 
     - name: Check oracle_client install
-      ansible.windows.win_stat:
+      win_stat:
         path: C:\oracle\NT_193000_client_home\install
       register: file_status_oracle_client
 
