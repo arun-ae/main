@@ -3,18 +3,18 @@
   hosts: all
   gather_facts: no
   tasks:
-    - name: Store playbook name in a variable
-      set_fact:
-        tier: "{{ansible_play_name[4:7]}}"
-        app_id: "{{ansible_play_name[0:3]}}"
-        env: "{{ tags['Environment'] | default('dv1') | lower }}"
-    - name: Print file status
-      debug:
-        var: "{{ item }}"
-      loop:
-        - tier
-        - app_id
-        - env
+    # - name: Store playbook name in a variable
+    #   set_fact:
+    #     tier: "{{ansible_play_name[4:7]}}"
+    #     app_id: "{{ansible_play_name[0:3]}}"
+    #     env: "{{ tags['Environment'] | default('dv1') | lower }}"
+    # - name: Print file status
+    #   debug:
+    #     var: "{{ item }}"
+    #   loop:
+    #     - tier
+    #     - app_id
+    #     - env
     
     - name: Check oracle_client folder if missing
       win_stat: 
