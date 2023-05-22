@@ -1,0 +1,50 @@
+
+
+- name: Apply Splunk Attributes
+  hosts: your_target_hosts
+  become: true
+  tasks:
+    - name: Store playbook name in a variable
+      set_fact:
+        tier: "{{ ansible_playbook_name[4:7] }}"
+        app_id: "{{ ansible_playbook_name[0:3] }}"
+        env_id: "{{ tags['Environment'] | default('dv1') | lower }}"
+
+    - name: Set Splunk attributes
+      block:
+        - name: Set Splunk accept_license
+          set_fact:
+            splunk_accept_license: true
+
+        - name: Set Splunk client host-name
+          set_fact:
+            splunk_client_host_name:
+              appid: "{{ app_id }}"
+              environment: "{{ env_id }}"
+              role: "{{ tier }}"
+
+        - name: Set Splunk app_logs
+          set_fact:
+            splunk_app_logs:
+              sourcetype: "{{ app_id }}_{{ tier }}_logs"
+              index: "apps_{{ app_id }}_logs"
+              disabled: false
+
+        - name: Set ae_splunk inputs app_logs
+          set_fact:
+            ae_splunk_inputs_app_logs:
+              sourcetype: "{{ app_id }}_{{ tier }}_logs"
+              index: "apps_{{ app_id }}_logs"
+              disabled: false
+
+        - name: Set ae_splunk inputs agent_hostname
+          set_fact:
+            ae_splunk_inputs_agent_hostname:
+              appid: "{{ app_id }}"
+              environment: "{{ env_id }}"
+              role: "{{ tier }}"
+
+      tags:
+        - splunk
+
+    # Add additional tasks as needed
