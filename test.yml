@@ -31,7 +31,9 @@
         color: "{{ 'black' if tags.Name[-1] == 'b' else 'red' if tags.Name[-1] == 'r' }}" 
     - name: print 
       debug: 
-        var: "{{ color }}"
+        var: "{{ item }}"
+      loop:
+        - color  
     #####################################33
 
   # tasks:
