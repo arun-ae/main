@@ -9,9 +9,9 @@
 
 
   tasks:
-    # - name: print 
-    #   debug: 
-    #     var: "{{ color }}"
+
+#-------------------------------------------------------------------------------------------------------------------
+       #code for checking environment condition 
 
 #     - name: Store playbook name in a variable
 #       set_fact:
@@ -27,6 +27,7 @@
 #         - env
 # #-------------------------------------------------------------------------------------------------------------------
 
+      #code for checking black or red colour 
 #     - name: black or red 
 #       set_fact:
 #         color: "{{ 'black' if tags.Name[-1] == 'b' else 'red' if tags.Name[-1] == 'r' }}" 
@@ -36,9 +37,11 @@
 #       loop:
 #         - color
 #--------------------------------------------------------------------------------------------------------------------
+
+##codde for checking ternary code getting values or not _________________________________________________
     - name: color check
       set_fact:
-        color: 'white'
+        color: 'black'
       register: check  
 
     - name : color check 
@@ -53,6 +56,26 @@
     - name : value check 
       debug:
         var: check
+#------------------------------------------------------------------------------------------------------------------- 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
       # loop: 
       #   - ae_base_agents_action_datadog  
 
