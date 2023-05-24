@@ -25,11 +25,9 @@
         - app_id
         - env
 
-vars:
-  color: "{{ 'black' if tags.Name[-1] == 'b' else 'red' if tags.Name[-1] == 'r' }}" 
-  -name: print 
-   debug: 
-     var:"{{color}}"
+    - name: print 
+      debug: 
+      var: "{{ color }}"
     #####################################33
 
   # tasks:
