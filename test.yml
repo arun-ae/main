@@ -1,5 +1,5 @@
 ---
-- name: rsh_ui 
+- name: rsh_ui_"{{ env }}"
   hosts: all
   gather_facts: no
 
@@ -13,18 +13,18 @@
 #-------------------------------------------------------------------------------------------------------------------
        #code for checking environment condition 
 
-#     - name: Store playbook name in a variable
-#       set_fact:
-#         tier: "{{ansible_play_name[4:7]}}"
-#         app_id: "{{ansible_play_name[0:3]}}"
-#         env: "{{ tags['Environment'] | default('dv1') | lower }}"
-#     - name: Print file status
-#       debug:
-#         var: "{{ item }}"
-#       loop:
-#         - tier
-#         - app_id
-#         - env
+    - name: Store playbook name in a variable
+      set_fact:
+        tier: "{{ansible_play_name[4:7]}}"
+        app_id: "{{ansible_play_name[0:3]}}"
+        env: "{{ tags['Environment'] | default('dv1') | lower }}"
+    - name: Print file status
+      debug:
+        var: "{{ item }}"
+      loop:
+        - tier
+        - app_id
+        - env
 # #-------------------------------------------------------------------------------------------------------------------
 
       #code for checking black or red colour 
