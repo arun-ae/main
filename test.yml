@@ -38,10 +38,10 @@
 #--------------------------------------------------------------------------------------------------------------------
     - name: color check
       set_fact:
-        color: 'red'
+        color: 'white'
       register: check  
 
-    - name : value check 
+    - name : color check 
       debug:
         var: check      
 
