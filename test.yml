@@ -34,6 +34,17 @@
         var: "{{ item }}"
       loop:
         - color  
+
+    - name: condition check 
+      set_fact:
+        ae_base_agents_action_datadog: "{{ color == 'red' or color == 'black' | ansible.builtin.ternary(True, False) }}" 
+
+    - name : value check 
+      debug;
+        var: "{{ item }}" 
+      loop: 
+        - ae_base_agents_action_datadog  
+
     #####################################33
 
   # tasks:
