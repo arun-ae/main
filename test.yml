@@ -40,7 +40,7 @@
         ae_base_agents_action_datadog: "{{ color == 'red' or color == 'black' | ansible.builtin.ternary(True, False) }}" 
 
     - name : value check 
-      debug;
+      debug:
         var: "{{ item }}" 
       loop: 
         - ae_base_agents_action_datadog  
