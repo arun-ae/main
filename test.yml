@@ -3,8 +3,8 @@
   hosts: all
   gather_facts: no
 
-  vars:
-    color: "{{ 'black' if tags.Name[-1] == 'b' else 'red' if tags.Name[-1] == 'r' }}" 
+  # vars:
+  #   color: "{{ 'black' if tags.Name[-1] == 'b' else 'red' if tags.Name[-1] == 'r' }}" 
 
 
   tasks:
@@ -25,6 +25,10 @@
         - app_id
         - env
 
+        
+    - name: black or red 
+      set_fact:
+        color: "{{ 'black' if tags.Name[-1] == 'b' else 'red' if tags.Name[-1] == 'r' }}" 
     - name: print 
       debug: 
       var: "{{ color }}"
