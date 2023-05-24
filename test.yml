@@ -41,7 +41,7 @@
 ##codde for checking ternary code getting values or not _________________________________________________
     - name: color check
       set_fact:
-        color: 'red'
+        color: 'black'
       register: check  
 
     - name : color check 
