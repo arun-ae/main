@@ -4,6 +4,7 @@
   gather_facts: no
 
   # vars:
+  #   ae_base_agents_action_datadog: 
   #   color: "{{ 'black' if tags.Name[-1] == 'b' else 'red' if tags.Name[-1] == 'r' }}" 
 
 
@@ -12,38 +13,48 @@
     #   debug: 
     #     var: "{{ color }}"
 
-    - name: Store playbook name in a variable
-      set_fact:
-        tier: "{{ansible_play_name[4:7]}}"
-        app_id: "{{ansible_play_name[0:3]}}"
-        env: "{{ tags['Environment'] | default('dv1') | lower }}"
-    - name: Print file status
-      debug:
-        var: "{{ item }}"
-      loop:
-        - tier
-        - app_id
-        - env
+#     - name: Store playbook name in a variable
+#       set_fact:
+#         tier: "{{ansible_play_name[4:7]}}"
+#         app_id: "{{ansible_play_name[0:3]}}"
+#         env: "{{ tags['Environment'] | default('dv1') | lower }}"
+#     - name: Print file status
+#       debug:
+#         var: "{{ item }}"
+#       loop:
+#         - tier
+#         - app_id
+#         - env
+# #-------------------------------------------------------------------------------------------------------------------
 
-
-    - name: black or red 
+#     - name: black or red 
+#       set_fact:
+#         color: "{{ 'black' if tags.Name[-1] == 'b' else 'red' if tags.Name[-1] == 'r' }}" 
+#     - name: print 
+#       debug: 
+#         var: "{{ item }}"
+#       loop:
+#         - color
+#--------------------------------------------------------------------------------------------------------------------
+    - name: color check
       set_fact:
-        color: "{{ 'black' if tags.Name[-1] == 'b' else 'red' if tags.Name[-1] == 'r' }}" 
-    - name: print 
-      debug: 
-        var: "{{ item }}"
-      loop:
-        - color  
-
-    - name: condition check 
-      set_fact:
-        ae_base_agents_action_datadog: "{{ color == 'red' or color == 'black' | ansible.builtin.ternary(True, False) }}" 
+        color: 'red'
+      register: check  
 
     - name : value check 
       debug:
-        var: "{{ item }}" 
-      loop: 
-        - ae_base_agents_action_datadog  
+        var: check      
+
+    - name: condition check 
+      set_fact:
+        ae_base_agents_action_datadog: "{{ color == 'red' or color == 'black' | ansible.builtin.ternary(True, False) }}"
+      register: check 
+
+    - name : value check 
+      debug:
+        var: check
+      # loop: 
+      #   - ae_base_agents_action_datadog  
 
     #####################################33
 
