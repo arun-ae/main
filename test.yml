@@ -2,7 +2,16 @@
 - name: rsh_ui 
   hosts: all
   gather_facts: no
+
+  vars:
+    color: "{{ 'black' if tags.Name[-1] == 'b' else 'red' if tags.Name[-1] == 'r' }}" 
+
+
   tasks:
+    - name: print 
+      debug: 
+        var: "{{ color }}"
+
     - name: Store playbook name in a variable
       set_fact:
         tier: "{{ansible_play_name[4:7]}}"
@@ -16,8 +25,11 @@
         - app_id
         - env
 
-
-
+vars:
+  color: "{{ 'black' if tags.Name[-1] == 'b' else 'red' if tags.Name[-1] == 'r' }}" 
+  -name: print 
+   debug: 
+     var:"{{color}}"
     #####################################33
 
   # tasks:
