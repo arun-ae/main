@@ -1,5 +1,5 @@
 ---
-- name: rsh_ui_"{{ env }}"
+- name: rsh_ui
   hosts: all
   gather_facts: no
 
@@ -13,18 +13,18 @@
 #-------------------------------------------------------------------------------------------------------------------
        #code for checking environment condition 
 
-    - name: Store playbook name in a variable
-      set_fact:
-        tier: "{{ansible_play_name[4:7]}}"
-        app_id: "{{ansible_play_name[0:3]}}"
-        env: "{{ tags['Environment'] | default('dv1') | lower }}"
-    - name: Print file status
-      debug:
-        var: "{{ item }}"
-      loop:
-        - tier
-        - app_id
-        - env
+    # - name: Store playbook name in a variable
+    #   set_fact:
+    #     tier: "{{ansible_play_name[4:7]}}"
+    #     app_id: "{{ansible_play_name[0:3]}}"
+    #     env: "{{ tags['Environment'] | default('dv1') | lower }}"
+    # - name: Print file status
+    #   debug:
+    #     var: "{{ item }}"
+    #   loop:
+    #     - tier
+    #     - app_id
+    #     - env
 # #-------------------------------------------------------------------------------------------------------------------
 
       #code for checking black or red colour 
@@ -39,30 +39,49 @@
 #--------------------------------------------------------------------------------------------------------------------
 
 ##codde for checking ternary code getting values or not _________________________________________________
-    - name: color check
+#     - name: color check
+#       set_fact:
+#         color: 'black'
+#       register: check  
+
+#     - name : color check 
+#       debug:
+#         var: check      
+
+#     - name: condition check 
+#       set_fact:
+#         # ae_base_agents_action_datadog: "{{ color == 'red' or color == 'black' | ansible.builtin.ternary(True, False) }}"
+#         ae_base_agents_action_datadog: "{{ ((color == 'red') or (color == 'black')) | ansible.builtin.ternary(True, False) }}"
+#       register: check                   
+
+
+#     - name : value check 
+#       debug:
+#         var: check
+# #------------------------------------------------------------------------------------------------------------------- 
+
+
+
+##codde for checking ternary code getting values or not _________________________________________________
+    - name: environment check 
       set_fact:
-        color: 'black'
+        env: 'stg'
       register: check  
 
-    - name : color check 
+    - name : environment check 
       debug:
         var: check      
 
     - name: condition check 
       set_fact:
         # ae_base_agents_action_datadog: "{{ color == 'red' or color == 'black' | ansible.builtin.ternary(True, False) }}"
-        ae_base_agents_action_datadog: "{{ ((color == 'red') or (color == 'black')) | ansible.builtin.ternary(True, False) }}"
+        ae_base_agents_action_datadog: "{{ ((env == 'stg') or (env == 'prod')) | ansible.builtin.ternary(True, False) }}"
       register: check                   
 
 
     - name : value check 
       debug:
         var: check
-#------------------------------------------------------------------------------------------------------------------- 
-
-
-
-
 
 
 
