@@ -8,9 +8,9 @@
 
 
   tasks:
-    - name: print 
-      debug: 
-        var: "{{ color }}"
+    # - name: print 
+    #   debug: 
+    #     var: "{{ color }}"
 
     - name: Store playbook name in a variable
       set_fact:
