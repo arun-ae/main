@@ -25,13 +25,13 @@
         - app_id
         - env
 
-        
+
     - name: black or red 
       set_fact:
         color: "{{ 'black' if tags.Name[-1] == 'b' else 'red' if tags.Name[-1] == 'r' }}" 
     - name: print 
       debug: 
-      var: "{{ color }}"
+        var: "{{ color }}"
     #####################################33
 
   # tasks:
