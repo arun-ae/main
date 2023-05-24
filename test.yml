@@ -50,7 +50,7 @@
 
     - name: condition check 
       set_fact:
-        ae_base_agents_action_datadog: "{{ color == 'red' or color == 'black' | ansible.builtin.ternary(True, False) }}"
+        ae_base_agents_action_datadog: "{{ color == 'red' else color == 'black' | ansible.builtin.ternary(True, False) }}"
       register: check 
 
     - name : value check 
