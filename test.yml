@@ -10,7 +10,7 @@
 
   tasks:
     - name: Checking package dependencies
-      package:
+      win_package:
         name: "{{ item }}"
         state: present
       loop:
