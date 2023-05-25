@@ -41,6 +41,7 @@
         }  
       become: yes
       become_method: runas
+      become_user: Administrator
       register: pip_output
 
     - name: Display upgrade status
