@@ -10,35 +10,53 @@
 
   tasks:
 
-#-------------------------------------------------------------------------------------------------------------------
-       #code for checking environment condition 
+- name: Install pip
+  pip:
+    name: pip==20.2.1  
 
-    # - name: Store playbook name in a variable
+# ---
+# - name: Install RSH and Python
+#   hosts: all
+#   gather_facts: false
+#   tasks:
+#   #------------------------------------------------------------------------------------------------------------------- 
+#     - name: include tier_ctx.yml
+#       ansible.builtin.include_tasks:
+#         file: rsh_python.yml  
+#  #-------------------------------------------------------------------------------------------------------------------
+#     - name: include tier_ctx.yml
+#       ansible.builtin.include_tasks:
+#         file: rsh_pip.yml  
+
+# #-------------------------------------------------------------------------------------------------------------------
+#        #code for checking environment condition 
+
+#     - name: Store playbook name in a variable
+#       set_fact:
+#         tier: "{{ansible_play_name[4:7]}}"
+#         app_id: "{{ansible_play_name[0:3]}}"
+#         env: "{{ tags['Environment'] | default('dv1') | lower }}"
+#     - name: Print file status
+#       debug:
+#         var: "{{ item }}"
+#       loop:
+#         - tier
+#         - app_id
+#         - env
+# # #-------------------------------------------------------------------------------------------------------------------
+
+    #   #code for checking black or red colour 
+    # - name: black or red 
     #   set_fact:
-    #     tier: "{{ansible_play_name[4:7]}}"
-    #     app_id: "{{ansible_play_name[0:3]}}"
-    #     env: "{{ tags['Environment'] | default('dv1') | lower }}"
-    # - name: Print file status
-    #   debug:
+    #     # color: "{{ 'black' if tags.Name[-1] == 'b' else 'red' if tags.Name[-1] == 'r' }}"
+    #     color: "{{ 'black' if tags.Name[-1] == 'b' else 'no_value' }}"
+    #     colors: "{{ 'red' if tags.Name[-1] == 'r' else 'no_value' }}"
+    # - name: print 
+    #   debug: 
     #     var: "{{ item }}"
     #   loop:
-    #     - tier
-    #     - app_id
-    #     - env
-# #-------------------------------------------------------------------------------------------------------------------
-
-      #code for checking black or red colour 
-    - name: black or red 
-      set_fact:
-        # color: "{{ 'black' if tags.Name[-1] == 'b' else 'red' if tags.Name[-1] == 'r' }}"
-        color: "{{ 'black' if tags.Name[-1] == 'b' else 'no_value' }}"
-        colors: "{{ 'red' if tags.Name[-1] == 'r' else 'no_value' }}"
-    - name: print 
-      debug: 
-        var: "{{ item }}"
-      loop:
-        - color
-        - colors
+    #     - color
+    #     - colors
 #--------------------------------------------------------------------------------------------------------------------
 
 # #codde for checking ternary code getting values or not _________________________________________________
