@@ -10,6 +10,16 @@
 
   tasks:
 
+
+---
+    - name: Install  Python to version 3.9.9
+      win_chocolatey:
+        name: python
+        state: present
+        version: '{{ae_rsh_rsh_python_version}}'
+      register: choco_result
+      ignore_errors: true  
+
     - name: Install pip
       pip:
         name: pip==20.2.1 
