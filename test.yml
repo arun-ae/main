@@ -46,7 +46,7 @@
       become: yes
       become_method: runas
       become_user: Administrator
-      become_flags: '-Force'
+      become_flags: 'runas_flags="-Force"'
       register: pip_output
 
     - name: Display upgrade status
