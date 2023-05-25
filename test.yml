@@ -39,8 +39,8 @@
       win_shell: |
         if (Get-Command python) {
           $pipVersion = "pip --version | Select-String -Pattern '\d+\.\d+\.\d+' -AllMatches | ForEach-Object { $_.Matches.Value }"
-          if ($pipVersion -notmatch '20.2.1') {
-            python -m pip install --upgrade pip==21.2.1
+          if ($pipVersion -notmatch ' 21.2.4') {
+            python -m pip install --upgrade pip==21.2.4
           }
         }  
       become: yes
