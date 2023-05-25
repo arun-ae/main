@@ -13,7 +13,7 @@
       win_chocolatey:
         name: python
         state: present
-        version: '3.9.9'
+        version: '3.7.0'
       register: print
         
     - name: Display upgrade status
