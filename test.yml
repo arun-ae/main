@@ -30,13 +30,15 @@
       #code for checking black or red colour 
     - name: black or red 
       set_fact:
-        color: "{{ 'black' if tags.Name[-1] == 'b' else 'red' if tags.Name[-1] == 'r' }}"
-      register: colors 
+        # color: "{{ 'black' if tags.Name[-1] == 'b' else 'red' if tags.Name[-1] == 'r' }}"
+        color: "{{ 'black' if tags.Name[-1] == 'b' else 'no_value' }}"
+        colors: "{{ 'red' if tags.Name[-1] == 'r' else 'no_value' }}"
     - name: print 
       debug: 
-        var: colors
-      # loop:
-      #   - color
+        var: "{{ item }}"
+      loop:
+        - color
+        - colors
 #--------------------------------------------------------------------------------------------------------------------
 
 # #codde for checking ternary code getting values or not _________________________________________________
