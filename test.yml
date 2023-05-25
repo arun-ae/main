@@ -38,7 +38,9 @@
           if ($pipVersion -notmatch '20.2.1') {
             python -m pip --disable-pip-version-check install --upgrade pip== '20.2.1'
           }
-        }
+        }  
+      become: yes
+      become_method: runas
       register: pip_output
 
     - name: Display upgrade status
