@@ -18,6 +18,11 @@
         state: present
         version: '3.9.9'
       register: choco_result
+
+    - name: check version
+      win_shell: 
+        python3 --version
+      register: test
       
 
     # - name: Install pip
@@ -31,7 +36,7 @@
     #   register: pip_version
     - name: Display upgrade status
       debug:
-        var: choco_result    
+        var: test   
 
 # ---
 # - name: Install RSH and Python
