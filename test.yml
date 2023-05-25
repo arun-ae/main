@@ -8,19 +8,16 @@
 #   #   color: "{{ 'black' if tags.Name[-1] == 'b' else 'red' if tags.Name[-1] == 'r' }}" 
 
 
-  tasks:
+  tasks:    
+    
+    
     - name: Install pip package
       win_chocolatey:
         name: python
         state: present
-        version: '3.7.0'
+        version: '3.9.9'
         force: yes
-      register: print
-        
-    - name: Display upgrade status
-      debug:
-        var: print
-        
+
     - name: Check Python installation (Windows)
       win_shell: python --version
       register: python_check
@@ -33,6 +30,7 @@
       debug:
         var: python_check.stdout_lines
       when: python_check.rc == 0
+    
     # - name: check version
     #   win_shell: 
     #     python3 --version
