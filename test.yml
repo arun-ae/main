@@ -28,17 +28,18 @@
 # #-------------------------------------------------------------------------------------------------------------------
 
       #code for checking black or red colour 
-#     - name: black or red 
-#       set_fact:
-#         color: "{{ 'black' if tags.Name[-1] == 'b' else 'red' if tags.Name[-1] == 'r' }}" 
-#     - name: print 
-#       debug: 
-#         var: "{{ item }}"
-#       loop:
-#         - color
+    - name: black or red 
+      set_fact:
+        color: "{{ 'black' if tags.Name[-1] == 'b' else 'red' if tags.Name[-1] == 'r' }}"
+      register: colors 
+    - name: print 
+      debug: 
+        var: colors
+      # loop:
+      #   - color
 #--------------------------------------------------------------------------------------------------------------------
 
-##codde for checking ternary code getting values or not _________________________________________________
+# #codde for checking ternary code getting values or not _________________________________________________
 #     - name: color check
 #       set_fact:
 #         color: 'black'
@@ -62,26 +63,26 @@
 
 
 
-##codde for checking ternary code getting values or not _________________________________________________
-    - name: environment check 
-      set_fact:
-        env: 'stg'
-      register: check  
+##codde for  ENVIRONMENT checking ternary code getting values or not _________________________________________________
+    # - name: environment check 
+    #   set_fact:
+    #     env: 'stg'
+    #   register: check  
 
-    - name : environment check 
-      debug:
-        var: check      
+    # - name : environment check 
+    #   debug:
+    #     var: check      
 
-    - name: condition check 
-      set_fact:
-        # ae_base_agents_action_datadog: "{{ color == 'red' or color == 'black' | ansible.builtin.ternary(True, False) }}"
-        ae_base_agents_action_datadog: "{{ ((env == 'stg') or (env == 'prod')) | ansible.builtin.ternary(True, False) }}"
-      register: check                   
+    # - name: condition check 
+    #   set_fact:
+    #     # ae_base_agents_action_datadog: "{{ color == 'red' or color == 'black' | ansible.builtin.ternary(True, False) }}"
+    #     ae_base_agents_action_datadog: "{{ ((env == 'stg') or (env == 'prod')) | ansible.builtin.ternary(True, False) }}"
+    #   register: check                   
 
 
-    - name : value check 
-      debug:
-        var: check
+    # - name : value check 
+    #   debug:
+    #     var: check
 
 
 
