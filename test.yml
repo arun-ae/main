@@ -20,7 +20,19 @@
     - name: Display upgrade status
       debug:
         var: print
-
+        
+    - name: Check Python installation (Windows)
+      win_shell: python --version
+      register: python_check
+      failed_when: python_check.rc != 0
+      changed_when: false
+      ignore_errors: true
+      when: ansible_os_family == "Windows"
+      
+    - name: Display Python version if installed
+      debug:
+        var: python_check.stdout_lines
+      when: python_check.rc == 0
     # - name: check version
     #   win_shell: 
     #     python3 --version
