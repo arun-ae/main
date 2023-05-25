@@ -1,28 +1,28 @@
----
-- name: rsh_ui
-  hosts: all
-  gather_facts: false
+# ---
+# - name: rsh_ui
+#   hosts: all
+#   gather_facts: false
 
-  # vars:
-  #   ae_base_agents_action_datadog: 
-  #   color: "{{ 'black' if tags.Name[-1] == 'b' else 'red' if tags.Name[-1] == 'r' }}" 
-
-
-  tasks:
+#   # vars:
+#   #   ae_base_agents_action_datadog: 
+#   #   color: "{{ 'black' if tags.Name[-1] == 'b' else 'red' if tags.Name[-1] == 'r' }}" 
 
 
+#   tasks:
 
-    - name: Install  Python to version 3.9.9
-      win_chocolatey:
-        name: python
-        state: present
-        version: '3.9.9'
-      register: choco_result
 
-    - name: check version
-      win_shell: 
-        python3 --version
-      register: test
+
+#     - name: Install  Python to version 3.9.9
+#       win_chocolatey:
+#         name: python
+#         state: present
+#         version: '3.9.9'
+#       register: choco_result
+
+    # - name: check version
+    #   win_shell: 
+    #     python3 --version
+    #   register: test
       
 
     # - name: Install pip
@@ -33,10 +33,10 @@
     #   win_chocolatey:
     #     name: pip
     #     state: present
-    #   register: pip_version
-    - name: Display upgrade status
-      debug:
-        var: test   
+    # #   register: pip_version
+    # - name: Display upgrade status
+    #   debug:
+    #     var: test   
 
 # ---
 # - name: Install RSH and Python
@@ -229,19 +229,19 @@
     #   debug:
     #     var: pip_version  
 
-    - name: Pip Upgrade if necessary
-      win_shell: |
-        if (Get-Command python) {
-          $pipVersion = "pip --version | Select-String -Pattern '\d+\.\d+\.\d+' -AllMatches | ForEach-Object { $_.Matches.Value }"
-          if ($pipVersion -ne '20.2.1') {
-            python -m pip --disable-pip-version-check install --upgrade pip=='20.2.1'
-          }
-        }
-      register: pip_output
+    # - name: Pip Upgrade if necessary
+    #   win_shell: |
+    #     if (Get-Command python) {
+    #       $pipVersion = "pip --version | Select-String -Pattern '\d+\.\d+\.\d+' -AllMatches | ForEach-Object { $_.Matches.Value }"
+    #       if ($pipVersion -ne '20.2.1') {
+    #         python -m pip --disable-pip-version-check install --upgrade pip=='20.2.1'
+    #       }
+    #     }
+    #   register: pip_output
 
-    - name: Display upgrade status
-      debug:
-        var: pip_output
+    # - name: Display upgrade status
+    #   debug:
+    #     var: pip_output
 
 
     #CHAT GPT
@@ -335,3 +335,23 @@
 #       debug:
 #         var: installing_python
     
+##################################################################################################
+- name: rsh_pip
+  hosts: all
+  gather_facts: false
+  tasks:
+    - name: Pip Creating Requirements file
+      copy:
+        src: piprequirements.txt
+        dest: C:\piprequirements.txt
+        mode: '0700'
+
+    - name: Pip Upgrade
+      win_command: >
+        python -m pip --disable-pip-version-check install --upgrade pip== '20.2.1'
+      args:
+        creates: pip --version | findstr '20.2.1'
+
+    - name: Pip Install packages
+      win_command: >
+        pip --disable-pip-version-check install -r piprequirements.txt
