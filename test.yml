@@ -1,7 +1,7 @@
 ---
 - name: rsh_ui
   hosts: all
-  gather_facts: no
+  gather_facts: false
 
   # vars:
   #   ae_base_agents_action_datadog: 
@@ -10,19 +10,24 @@
 
   tasks:
 
-- name: Install pip
-  pip:
-    name: pip==20.2.1  
+    - name: Install pip
+      pip:
+        name: pip==20.2.1 
+        register: pip_output
+
+    - name: Display upgrade status
+      debug:
+        var: pip_output     
 
 # ---
 # - name: Install RSH and Python
 #   hosts: all
 #   gather_facts: false
-#   tasks:
-#   #------------------------------------------------------------------------------------------------------------------- 
-#     - name: include tier_ctx.yml
-#       ansible.builtin.include_tasks:
-#         file: rsh_python.yml  
+  # tasks:
+  # #------------------------------------------------------------------------------------------------------------------- 
+  #   - name: include tier_ctx.yml
+  #     ansible.builtin.include_tasks:
+  #       file: rsh_python.yml  
 #  #-------------------------------------------------------------------------------------------------------------------
 #     - name: include tier_ctx.yml
 #       ansible.builtin.include_tasks:
@@ -205,19 +210,19 @@
     #   debug:
     #     var: pip_version  
 
-    # - name: Pip Upgrade if necessary
-    #   win_shell: |
-    #     if (Get-Command python) {
-    #       $pipVersion = "pip --version | Select-String -Pattern '\d+\.\d+\.\d+' -AllMatches | ForEach-Object { $_.Matches.Value }"
-    #       if ($pipVersion -ne '20.2.1') {
-    #         python -m pip --disable-pip-version-check install --upgrade pip=='20.2.1'
-    #       }
-    #     }
-    #   register: pip_output
+    - name: Pip Upgrade if necessary
+      win_shell: |
+        if (Get-Command python) {
+          $pipVersion = "pip --version | Select-String -Pattern '\d+\.\d+\.\d+' -AllMatches | ForEach-Object { $_.Matches.Value }"
+          if ($pipVersion -ne '20.2.1') {
+            python -m pip --disable-pip-version-check install --upgrade pip=='20.2.1'
+          }
+        }
+      register: pip_output
 
-    # - name: Display upgrade status
-    #   debug:
-    #     var: pip_output
+    - name: Display upgrade status
+      debug:
+        var: pip_output
 
 
     #CHAT GPT
