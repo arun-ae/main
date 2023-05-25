@@ -9,29 +9,16 @@
 
 
   tasks:
-    # - name: Checking package dependencies
-    #   win_package:
-    #     name: "{{ item }}"
-    #     state: present
-    #   loop:
-    #     - python
-    #     - unzip
-    #     - python-pip
-
-
-
-    - name: Install  Python to version 3.9.9
+    - name: Install pip package
       win_chocolatey:
         name: python
         state: present
         version: '3.9.9'
-      register: choco_result
-
-    - name: Install pip package
-      win_chocolatey:
-        name: python-pip
-        state: present
-        source: https://alternative-package-source/api/v2/
+      register: print
+        
+    - name: Display upgrade status
+      debug:
+        var: print
 
     # - name: check version
     #   win_shell: 
