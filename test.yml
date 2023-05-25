@@ -5,7 +5,7 @@
   become: yes
   become_method: runas
   become_user: Administrator
-  
+
 
 #   # vars:
 #   #   ae_base_agents_action_datadog: 
@@ -46,6 +46,7 @@
       become: yes
       become_method: runas
       become_user: Administrator
+      become_flags: '-Force'
       register: pip_output
 
     - name: Display upgrade status
