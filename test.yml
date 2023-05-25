@@ -1,14 +1,22 @@
-# ---
-# - name: rsh_ui
-#   hosts: all
-#   gather_facts: false
+---
+- name: rsh_ui
+  hosts: all
+  gather_facts: false
 
 #   # vars:
 #   #   ae_base_agents_action_datadog: 
 #   #   color: "{{ 'black' if tags.Name[-1] == 'b' else 'red' if tags.Name[-1] == 'r' }}" 
 
 
-#   tasks:
+  tasks:
+    - name: Checking package dependencies
+      package:
+        name: "{{ item }}"
+        state: present
+      loop:
+        - python
+        - unzip
+        - python-pip
 
 
 
@@ -335,24 +343,24 @@
 #       debug:
 #         var: installing_python
     
-##################################################################################################
-- name: rsh_pip
-  hosts: all
-  gather_facts: false
-  tasks:
-    - name: Pip Creating Requirements file
-      copy:
-        src: files/piprequirements.txt
-        dest: 'C:/piprequirements.txt'
-        mode: '0700'
+# ##################################################################################################
+# - name: rsh_pip
+#   hosts: all
+#   gather_facts: false
+#   tasks:
+#     - name: Pip Creating Requirements file
+#       copy:
+#         src: files/piprequirements.txt
+#         dest: 'C:/piprequirements.txt'
+#         mode: '0700'
      
 
-    - name: Pip Upgrade
-      win_command: >
-        python -m pip --disable-pip-version-check install --upgrade pip== '20.2.1'
-      args:
-        creates: pip --version | findstr '20.2.1'
+#     - name: Pip Upgrade
+#       win_command: >
+#         python -m pip --disable-pip-version-check install --upgrade pip== '20.2.1'
+#       args:
+#         creates: pip --version | findstr '20.2.1'
 
-    - name: Pip Install packages
-      win_command: >
-        pip --disable-pip-version-check install -r piprequirements.txt
+#     - name: Pip Install packages
+#       win_command: >
+#         pip --disable-pip-version-check install -r piprequirements.txt
