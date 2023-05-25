@@ -33,7 +33,7 @@
     #   win_chocolatey:
     #     name: pip
     #     state: present
-    # #   register: pip_version
+    #   register: pip_version
     # - name: Display upgrade status
     #   debug:
     #     var: test   
@@ -342,9 +342,10 @@
   tasks:
     - name: Pip Creating Requirements file
       copy:
-        src: piprequirements.txt
+        src: files/piprequirements.txt
         dest: 'C:/piprequirements.txt'
         mode: '0700'
+     
 
     - name: Pip Upgrade
       win_command: >
