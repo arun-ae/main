@@ -1,7 +1,7 @@
 ---
 - name: rsh_ui
   hosts: all
-  gather_facts: false
+  gather_facts: true
 
 #   # vars:
 #   #   ae_base_agents_action_datadog: 
