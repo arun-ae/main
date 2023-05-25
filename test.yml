@@ -16,7 +16,7 @@
       win_chocolatey:
         name: python
         state: present
-        version: '{{ae_rsh_rsh_python_version}}'
+        version: '3.9.9'
       register: choco_result
       ignore_errors: true  
 
