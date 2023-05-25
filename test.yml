@@ -2,6 +2,9 @@
 - name: rsh_ui
   hosts: all
   gather_facts: true
+  become: yes
+  become_method: runas
+  become_user: Administrator
 
 #   # vars:
 #   #   ae_base_agents_action_datadog: 
