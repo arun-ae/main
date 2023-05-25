@@ -343,7 +343,7 @@
     - name: Pip Creating Requirements file
       copy:
         src: piprequirements.txt
-        dest: C:\piprequirements.txt
+        dest: 'C:/piprequirements.txt'
         mode: '0700'
 
     - name: Pip Upgrade
