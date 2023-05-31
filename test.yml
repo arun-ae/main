@@ -9,7 +9,22 @@
   vars:
     act_env: "{{ tags['Environment'] | default('dv1') | lower }}"
 
-  tasks:    
+  tasks:  
+
+
+    - name: Check Python installation (Windows)
+      win_shell: python --version
+      register: python_check
+      failed_when: python_check.rc != 0
+      changed_when: false
+      ignore_errors: true
+      when: ansible_os_family == "Windows"
+      
+    - name: Display Python version if installed
+      debug:
+        var: python_check.stdout_lines
+      when: python_check.rc == 0
+          
     - name: Store playbook env in a variable
       set_fact:
         env_mapping:
@@ -90,18 +105,7 @@
     #     version: '3.9.9'
     #     force: yes
 
-    # - name: Check Python installation (Windows)
-    #   win_shell: python --version
-    #   register: python_check
-    #   failed_when: python_check.rc != 0
-    #   changed_when: false
-    #   ignore_errors: true
-    #   when: ansible_os_family == "Windows"
-      
-    # - name: Display Python version if installed
-    #   debug:
-    #     var: python_check.stdout_lines
-    #   when: python_check.rc == 0
+
     
     # - name: upgrading pip based on version 
     #   win_shell: |
