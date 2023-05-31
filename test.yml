@@ -6,51 +6,79 @@
   become_method: runas
   become_user: Administrator
 
-
-#   # vars:
-#   #   ae_base_agents_action_datadog: 
-#   #   color: "{{ 'black' if tags.Name[-1] == 'b' else 'red' if tags.Name[-1] == 'r' }}" 
-
+  vars:
+    act_env: "{{ tags['Environment'] | default('dv1') | lower }}"
 
   tasks:    
-    
-    
-    - name: Install pip package
-      win_chocolatey:
-        name: python
-        state: present
-        version: '3.9.9'
-        force: yes
+    - name: Store playbook env in a variable
+      set_fact:
+        env_mapping:
+          dv1:
+            rsh_env: dv1
+            rsh_env_D: dv1
+          dev:
+            rsh_env: dv1
+            rsh_env_D: DV1
+          prd:
+            rsh_env: prd
+            rsh_env_D: PRD
 
-    - name: Check Python installation (Windows)
-      win_shell: python --version
-      register: python_check
-      failed_when: python_check.rc != 0
-      changed_when: false
-      ignore_errors: true
-      when: ansible_os_family == "Windows"
+    - name: Store playbook env in a variable
+      set_fact:
+        rsh_env: "{{ env_mapping[act_env]['rsh_env'] }}"
+        rsh_env_D: "{{ env_mapping[act_env]['rsh_env_D'] }}"  
+
+      register: check  
+
+    - name : color check 
+      debug:
+        var: check      
+
+
+
+
+
+
+
+
+
+    # - name: Install pip package
+    #   win_chocolatey:
+    #     name: python
+    #     state: present
+    #     version: '3.9.9'
+    #     force: yes
+
+    # - name: Check Python installation (Windows)
+    #   win_shell: python --version
+    #   register: python_check
+    #   failed_when: python_check.rc != 0
+    #   changed_when: false
+    #   ignore_errors: true
+    #   when: ansible_os_family == "Windows"
       
-    - name: Display Python version if installed
-      debug:
-        var: python_check.stdout_lines
-      when: python_check.rc == 0
+    # - name: Display Python version if installed
+    #   debug:
+    #     var: python_check.stdout_lines
+    #   when: python_check.rc == 0
     
-    - name: upgrading pip based on version 
-      win_shell: |
-        if (Get-Command python) {
-          $pipVersion = "pip --version | Select-String -Pattern '\d+\.\d+\.\d+' -AllMatches | ForEach-Object { $_.Matches.Value }"
-          if ($pipVersion -notmatch ' 21.2.4') {
-            python -m pip install --upgrade pip==21.2.4
-          }
-        }  
-      become: yes
-      become_method: runas
-      become_user: Administrator
-      register: pip_output
+    # - name: upgrading pip based on version 
+    #   win_shell: |
+    #     $version = "{{ ae_rsh_rsh_pip_version }}"
+    #     if (Get-Command python) {
+    #       $pipVersion = "pip --version | Select-String -Pattern '\d+\.\d+\.\d+' -AllMatches | ForEach-Object { $_.Matches.Value }"
+    #       if ($pipVersion -notmatch ' 21.2.4') {
+    #         python -m pip install --upgrade pip==21.2.4
+    #       }
+    #     }  
+    #   become: yes
+    #   become_method: runas
+    #   become_user: Administrator
+    #   register: pip_output
 
-    - name: Display upgrade status
-      debug:
-        var: pip_output
+    # - name: Display upgrade status
+    #   debug:
+    #     var: pip_output
     # - name: check version
     #   win_shell: 
     #     python3 --version
@@ -116,14 +144,14 @@
 #--------------------------------------------------------------------------------------------------------------------
 
 # #codde for checking ternary code getting values or not _________________________________________________
-#     - name: color check
-#       set_fact:
-#         color: 'black'
-#       register: check  
+    - name: color check
+      set_fact:
+        color: 'black'
+      register: check  
 
-#     - name : color check 
-#       debug:
-#         var: check      
+    - name : color check 
+      debug:
+        var: check      
 
 #     - name: condition check 
 #       set_fact:
