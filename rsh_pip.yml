@@ -1,0 +1,39 @@
+---
+- name: Pip Creating Requirements file
+  win_copy:
+    src: files/piprequirements.txt
+    dest: "{{ae_rsh_rsh_pip_requirementsfile}}"
+    mode: '0700' 
+
+#----------------------------------------------------------------------------------------------------------------------
+- name: upgrading pip based on version
+  win_shell: |
+    if (Get-Command python) {
+      $pipVersion = pip --version | Select-String -Pattern '\d+\.\d+\.\d+' -AllMatches | ForEach-Object { $_.Matches.Value }
+      if ($pipVersion -notmatch '{{ ae_rsh_rsh_pip_version }}') {
+        python -m pip install --upgrade pip=={{ ae_rsh_rsh_pip_version }}
+      }
+    }
+
+  register: pip_output
+
+- name: Display upgrade status
+  debug:
+    var: pip_output
+
+#-------------------------------------------------------------------------------------------------------------------  
+
+
+
+- name: packages installing available in requirments.txt
+  win_shell: |
+    if (Get-Command pip) {
+      pip --disable-pip-version-check install -r "{{ ae_rsh_rsh_pip_requirementsfile }}"
+    }
+  register: file_output
+- name : Display upgrade status
+  debug:
+    var: file_output  
+
+
+#-------------------------------------------------------------------------------------------------------------------  

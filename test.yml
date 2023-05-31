@@ -25,32 +25,55 @@
         var: python_check.stdout_lines
       when: python_check.rc == 0
 
-    - name: Store playbook env in a variable
+    # - name: Store playbook env in a variable
+    #   set_fact:
+    #     env_mapping:
+    #       dv1:
+    #         rsh_env: dv1
+    #         rsh_env_D: dv1
+    #       dev:
+    #         rsh_env: dv1
+    #         rsh_env_D: DV1
+    #       stg:
+    #         rsh_env: environment.txt
+    #         rsh_env_D: STG
+    #       prd:
+    #         rsh_env: prd
+    #         rsh_env_D: PRD
+
+    # - name: Store playbook env in a variable
+    #   set_fact:
+    #     rsh_env: "{{ env_mapping[act_env]['rsh_env'] }}"
+    #     rsh_env_D: "{{ env_mapping[act_env]['rsh_env_D'] }}"  
+
+    #   register: environment_value   
+
+    # - name : environment value check 
+    #   debug:
+    #     var: environment_value 
+
+
+    - name: Store playbook env in variables
       set_fact:
         env_mapping:
           dv1:
             rsh_env: dv1
-            rsh_env_D: dv1
+            rsh_ENV: dv1
           dev:
             rsh_env: dv1
-            rsh_env_D: DV1
+            rsh_ENV: DV1
           stg:
-            rsh_env: environment.txt
-            rsh_env_D: STG
+            rsh_env: stg
+            rsh_ENV: STG
           prd:
             rsh_env: prd
-            rsh_env_D: PRD
-
-    - name: Store playbook env in a variable
-      set_fact:
-        rsh_env: "{{ env_mapping[act_env]['rsh_env'] }}"
-        rsh_env_D: "{{ env_mapping[act_env]['rsh_env_D'] }}"  
-
+            rsh_ENV: PRD
+        rsh_env: "{{ env_mapping[env]['rsh_env'] }}"
+        rsh_ENV: "{{ env_mapping[env]['rsh_ENV'] }}"
       register: environment_value   
-
-    - name : environment value check 
+    - name : single task environment value check 
       debug:
-        var: environment_value 
+        var: environment_value
 
 
     - name: Create directory

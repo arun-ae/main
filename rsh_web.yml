@@ -1,0 +1,59 @@
+---
+- name: rsh_web
+  hosts: all
+  gather_facts: True
+  become: yes
+  become_method: runas
+  become_user: Administrator
+  vars:
+    # Domain Join Attributes
+    ae_windows_base_join_domain_enabled: true
+    ae_windows_base_join_domain_domain_name: 'aetnglobal.corp'
+    ae_windows_base_join_domain_ou_path: 'OU=Development,OU=PPAS,OU=Amazon Virginia,OU=Servers,OU=New York,OU=CORPORATE,OU=NORAM,DC=aetnglobal,DC=corp'
+#------------------------------------------------------------------------------------------------------------
+    env: "{{ tags['Environment'] | default('dv1') | lower }}"
+    color: "{{ 'black' if tags.Name[-1] == 'b' else 'red' if tags.Name[-1] == 'r' }}"  
+#------------------------------------------------------------------------------------------------------------
+    ae_base_agents_action_crowdstrike: false 
+    ae_base_agents_action_godeploy: True
+#------------------------------------------------------------------------------------------------------------
+    ae_splunk_inputs_app_logs_index: 'apps_rsh_logs'  
+    ae_splunk_inputs_app_logs_disabled: false   
+    ae_splunk_inputs_agent_hostname_appid: 'rsh'
+    ae_splunk_inputs_agent_hostname_environment: "{{ env }}" 
+    ae_splunk_inputs_agent_hostname_role: 'web'
+    ae_splunk_inputs_app_logs_sourcetype: 'rsh_web_logs'  
+#------------------------------------------------------------------------------------------------------------
+    ae_base_agents_action_datadog: "{{ (env == 'prd') | ansible.builtin.ternary(true, false) }}"
+#------------------------------------------------------------------------------------------------------------
+    ae_base_include_audit: False
+#------------------------------------------------------------------------------------------------------------
+    ae_vsts_agent_deployment_group_tags: "tier,{{ env }}"
+#-----------------------------------------------------------------------------------------------------------
+    ae_vsts_agent_deployment_group_name: 'rsh'
+#-----------------------------------------------------------------------------------------------------#
+    ae_rsh_rsh_python_version: '3.9.9'
+    ae_rsh_rsh_pip_version: '20.2.1'
+    ae_rsh_rsh_pip_requirementsfile: 'C:/piprequirements.txt'
+#---------------------------------------------------------------------------------------------------------------
+    ae_cis_windows_firewall_disable_merging_of_public_local_firewall_policies: false
+    ae_cis_windows_registry_enable_ms_server_always_digitally_sign_communications: false
+#--------------------------------------------------------------------------------------------------------
+  tasks:
+  - name: include windows base
+    ansible.builtin.include_role:
+      name: aenetworks.base.ae_windows_base
+    tags: notest  
+  #--------------------------------------------------------------------------------------------------------
+  - name: include windows base
+    ansible.builtin.include_role:
+      name: aenetworks.base.ae_cis_windows 
+    tags: notest    
+  #--------------------------------------------------------------------------------------------------------        
+  - name: include tier_web.yml
+    ansible.builtin.include_tasks:
+      file: tasks/tier_web.yml
+      #-------------------------------------------------------------------------------------------------------------------        
+
+
+    

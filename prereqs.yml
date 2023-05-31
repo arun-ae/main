@@ -1,0 +1,45 @@
+# ---
+
+# - name: Store playbook name in a variable
+#   set_fact:
+#     tier: "{{ansible_play_name[4:6]}}"
+#     app_id: "{{ansible_play_name[0:3]}}"
+#     env: "{{ tags['Environment'] | default('dv1') | lower }}"
+# - name: Print file status
+#   debug:
+#     var: "{{ item }}"
+#   loop:
+#     - tier
+#     - app_id
+#     - env
+# #-------------------------------------------------------------------------------------------------------------------  
+
+#   #splunk
+#   accept_liecense: true
+#   clinet_hostname:
+#     app_id: "{{ansible_play_name[0:3]}}"
+#     environmet: "{{ tags['Environment'] | default('dv1') | lower }}"
+#     tier: "{{ansible_play_name[4:7]}}"
+
+#   app_logs:
+#     sourcetype: "{{ansible_play_name[0:3] + '_' + ansible_play_name[4:7] + '_logs'}}"
+#     index: "{{ 'apps_' + ansible_play_name[0:3] + '_logs' }}"
+#     disabled: false,
+
+#   inputs_app_logs:
+#     sourcetype: "{{ansible_play_name[0:3] + '_' + ansible_play_name[4:7] + '_logs'}}"
+#     index: "{{ 'apps_' + ansible_play_name[0:3] + '_logs' }}"
+#     disabled: false
+
+#   inputs_agent_hostname:
+#     tier: "{{ansible_play_name[4:7]}}"
+#     app_id: "{{ansible_play_name[0:3]}}"
+#     env: "{{ tags['Environment'] | default('dv1') | lower }}" 
+
+#     ae_vsts_agent_deployment_group_name: 'rsh'
+
+# - name: include windows base
+#   ansible.builtin.include_role:
+#     name: aenetworks.base.ae_vsts_agent
+#   tags: notest
+# #-------------------------------------------------------------------------------------------------------------------  
