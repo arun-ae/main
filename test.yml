@@ -35,9 +35,27 @@
 
     - name : environment value check 
       debug:
-        var: environment_value       
+        var: environment_value 
 
 
+
+    - name: Create a file
+      file:
+        path: /path/to/your/file.txt
+        state: touch
+        owner: your_username
+        group: your_group
+        mode: "0644"
+        content: |
+          This is the content of the file.
+          It can span multiple lines.
+          You can include variables like {{ rsh_env }}.
+
+      register: filename    
+
+    - name : environment value check 
+      debug:
+        var: filename 
 #---------------------------------------------------------------------------------------
     # tasks:
     # - name: Store playbook env in a variable
