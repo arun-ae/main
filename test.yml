@@ -7,7 +7,7 @@
   become_user: Administrator
 
   vars:
-    act_env: "{{ tags['Environment'] | default('dv1') | lower }}"
+    env: "{{ tags['Environment'] | default('dv1') | lower }}"
 
   tasks:  
 
