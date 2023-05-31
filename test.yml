@@ -17,8 +17,8 @@
             rsh_env: dv1
             rsh_env_D: dv1
           dev:
-            rsh_env: dv1
-            rsh_env_D: DV1
+            rsh_env: Nathan
+            rsh_env_D: Nathan
           prd:
             rsh_env: prd
             rsh_env_D: PRD
@@ -144,14 +144,14 @@
 #--------------------------------------------------------------------------------------------------------------------
 
 # #codde for checking ternary code getting values or not _________________________________________________
-    - name: color check
-      set_fact:
-        color: 'black'
-      register: check  
+    # - name: color check
+    #   set_fact:
+    #     color: 'black'
+    #   register: check  
 
-    - name : color check 
-      debug:
-        var: check      
+    # - name : color check 
+    #   debug:
+    #     var: check      
 
 #     - name: condition check 
 #       set_fact:
