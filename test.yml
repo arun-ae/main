@@ -17,8 +17,11 @@
             rsh_env: dv1
             rsh_env_D: dv1
           dev:
-            rsh_env: Nathan
-            rsh_env_D: Nathan
+            rsh_env: dv1
+            rsh_env_D: DV1
+          stg:
+            rsh_env: stg
+            rsh_env_D: STG
           prd:
             rsh_env: prd
             rsh_env_D: PRD
@@ -35,7 +38,27 @@
         var: check      
 
 
+#---------------------------------------------------------------------------------------
+    tasks:
+    - name: Store playbook env in a variable
+      set_fact:
+        rsh_env: dv1
+        rsh_env_D: dv1
+      when: act_env == 'dv1'
 
+    - name: Store playbook env in a variable
+      set_fact:
+        rsh_env: dv1
+        rsh_env_D: DV1
+      when: act_env == 'dev'
+  
+    - name: Store playbook env in a variable
+      set_fact:
+        rsh_env: prd
+        rsh_env_D: PRD
+      when: act_env == 'prd'
+
+  #-------------------------------------------------------------------------------------------------------- 
 
 
 
