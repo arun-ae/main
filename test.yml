@@ -31,11 +31,11 @@
         rsh_env: "{{ env_mapping[act_env]['rsh_env'] }}"
         rsh_env_D: "{{ env_mapping[act_env]['rsh_env_D'] }}"  
 
-      register: check  
+      register: environment_value   
 
-    - name : color check 
+    - name : environment value check 
       debug:
-        var: check      
+        var: environment_value       
 
 
 #---------------------------------------------------------------------------------------
