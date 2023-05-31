@@ -35,7 +35,7 @@
             rsh_env: dv1
             rsh_env_D: DV1
           stg:
-            rsh_env: stg
+            rsh_env: environment.txt
             rsh_env_D: STG
           prd:
             rsh_env: prd
@@ -62,7 +62,7 @@
 
     - name: Create a test file
       win_file:
-        path: C:\path\to\your\file.txt
+        path: "C:\\path\\to\\your\\{{ rsh_env }}"
         state: touch
         content: "This is a test file created by Ansible."
       register: filename    
@@ -70,6 +70,12 @@
     - name : environment value check 
       debug:
         var: filename 
+
+
+
+    - name: Display rsh_env value
+      debug:
+        var: rsh_env        
 #---------------------------------------------------------------------------------------
     # tasks:
     # - name: Store playbook env in a variable
