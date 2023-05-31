@@ -31,7 +31,7 @@
       
     - name: Single task environment value check 
       debug:
-        var: environment_value 
+        var:
           - rsh_env
           - rsh_ENV
 
