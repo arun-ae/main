@@ -6,6 +6,36 @@
   become_method: runas
   become_user: Administrator
 
+  # vars:
+  #   env: "{{ tags['Environment'] | default('dv1') | lower }}"
+
+  #   env_mapping:
+  #     dv1:
+  #       rsh_env: dv1
+  #       rsh_ENV: dv1
+  #     dev:
+  #       rsh_env: dv1
+  #       rsh_ENV: DV1
+  #     stg:
+  #       rsh_env: stg
+  #       rsh_ENV: STG
+  #     prd:
+  #       rsh_env: prd
+  #       rsh_ENV: PRD
+  # tasks:
+  #   - name: Store playbook env in variables
+  #     set_fact:
+  #       rsh_env: "{{ env_mapping[env]['rsh_env'] }}"
+  #       rsh_ENV: "{{ env_mapping[env]['rsh_ENV'] }}"
+  #     register: environment_value
+      
+  #   - name: Single task environment value check 
+  #     debug:
+  #       var:
+  #         - environment_value
+
+
+
   vars:
     env: "{{ tags['Environment'] | default('dv1') | lower }}"
 
@@ -22,18 +52,18 @@
       prd:
         rsh_env: prd
         rsh_ENV: PRD
+
   tasks:
     - name: Store playbook env in variables
       set_fact:
         rsh_env: "{{ env_mapping[env]['rsh_env'] }}"
         rsh_ENV: "{{ env_mapping[env]['rsh_ENV'] }}"
-      register: environment_value
-      
+
     - name: Single task environment value check 
       debug:
         var:
-          - environment_value
-
+          - rsh_env
+          - rsh_ENV
 
   # tasks:  
 
