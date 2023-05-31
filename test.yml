@@ -53,6 +53,12 @@
         var: environment_value 
 
 
+    - name: Create directory
+      win_file:
+        path: C:\path\to\your
+        state: directory      
+
+
 
     - name: Create a test file
       win_file:
