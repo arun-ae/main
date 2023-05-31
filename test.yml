@@ -24,7 +24,7 @@
       debug:
         var: python_check.stdout_lines
       when: python_check.rc == 0
-          
+
     - name: Store playbook env in a variable
       set_fact:
         env_mapping:
@@ -57,10 +57,6 @@
     - name: Create a file
       file:
         path: /path/to/your/file.txt
-        state: touch
-        owner: your_username
-        group: your_group
-        mode: "0644"
         content: |
           This is the content of the file.
           It can span multiple lines.
