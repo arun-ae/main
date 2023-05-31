@@ -54,14 +54,11 @@
 
 
 
-    - name: Create a file
-      file:
-        path: /path/to/your/file.txt
-        content: |
-          This is the content of the file.
-          It can span multiple lines.
-          You can include variables like {{ rsh_env }}.
-
+    - name: Create a test file
+      win_file:
+        path: C:\path\to\your\file.txt
+        state: touch
+        content: "This is a test file created by Ansible."
       register: filename    
 
     - name : environment value check 
